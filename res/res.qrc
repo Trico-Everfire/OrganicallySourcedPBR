@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>upload_image_dark.png</file>
+        <file>upload_image_light.png</file>
+        <file>upload_image_unknown.png</file>
+    </qresource>
+</RCC>
