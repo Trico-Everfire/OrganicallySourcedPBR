@@ -1439,7 +1439,7 @@ void OptionsMenu::setOptionsAndDefaults()
         value->setText(this->settings->value(key, "").toString());
     }
 
-    setKVEnable(this->settings->value("metadataEnabled", true).toBool());
+    setKVEnable(this->settings->value("MetadataEnabled", true).toBool());
 }
 
 OptionsMenu::OptionsMenu(QWidget *parent) : QDialog(parent)
@@ -1465,31 +1465,31 @@ OptionsMenu::OptionsMenu(QWidget *parent) : QDialog(parent)
 
     metaDataLayout->addWidget(new QLabel(tr("Author:"), this), 0, 0);
     auto authorLineEdit = new QLineEdit(this);
-    OptionsMenu::vtfMetaData["author"] = authorLineEdit;
+    OptionsMenu::vtfMetaData["Author"] = authorLineEdit;
     metaDataLayout->addWidget(authorLineEdit, 0, 1);
     metaDataLayout->addWidget(new QLabel(tr("Contact:"), this), 1, 0);
     auto contactLineEdit = new QLineEdit(this);
-    OptionsMenu::vtfMetaData["contact"] = contactLineEdit;
+    OptionsMenu::vtfMetaData["Contact"] = contactLineEdit;
     metaDataLayout->addWidget(contactLineEdit, 1, 1);
     metaDataLayout->addWidget(new QLabel(tr("Organization:"), this), 2, 0);
     auto organizationLineEdit = new QLineEdit(this);
-    OptionsMenu::vtfMetaData["organization"] = organizationLineEdit;
+    OptionsMenu::vtfMetaData["Organization"] = organizationLineEdit;
     metaDataLayout->addWidget(organizationLineEdit, 2, 1);
     metaDataLayout->addWidget(new QLabel(tr("Version:"), this), 3, 0);
     auto versionLineEdit = new QLineEdit(this);
-    OptionsMenu::vtfMetaData["version"] = versionLineEdit;
+    OptionsMenu::vtfMetaData["Version"] = versionLineEdit;
     metaDataLayout->addWidget(versionLineEdit, 3, 1);
     metaDataLayout->addWidget(new QLabel(tr("Modification:"), this), 4, 0);
     auto modificationLineEdit = new QLineEdit(this);
-    OptionsMenu::vtfMetaData["modification"] = modificationLineEdit;
+    OptionsMenu::vtfMetaData["Modification"] = modificationLineEdit;
     metaDataLayout->addWidget(modificationLineEdit, 4, 1);
     metaDataLayout->addWidget(new QLabel(tr("Description:"), this), 5, 0);
     auto descriptionLineEdit = new QLineEdit(this);
-    OptionsMenu::vtfMetaData["description"] = descriptionLineEdit;
+    OptionsMenu::vtfMetaData["Description"] = descriptionLineEdit;
     metaDataLayout->addWidget(descriptionLineEdit, 5, 1);
     metaDataLayout->addWidget(new QLabel(tr("Comments:"), this), 6, 0);
     auto commentLineEdit = new QLineEdit(this);
-    OptionsMenu::vtfMetaData["comment"] = commentLineEdit;
+    OptionsMenu::vtfMetaData["Comment"] = commentLineEdit;
     metaDataLayout->addWidget(commentLineEdit, 6, 1);
     metaDataLayout->addWidget(new QLabel(tr("Will also log creation time."), this), 7, 0, 1, 2);
 
@@ -1517,7 +1517,7 @@ OptionsMenu::OptionsMenu(QWidget *parent) : QDialog(parent)
             this->settings->setValue(key, value->text());
         }
 
-        this->settings->setValue("metadataEnabled", OptionsMenu::isKVDataEnabled());
+        this->settings->setValue("MetadataEnabled", OptionsMenu::isKVDataEnabled());
 
     });
     connect(this, &OptionsMenu::rejected, this, &OptionsMenu::setOptionsAndDefaults);
@@ -1532,8 +1532,8 @@ QString OptionsMenu::getFullMetaData() {
             continue;
         metadata = metadata.arg(key, value->text(), "\n\"%1\"\t\"%2\"\n%3");
     }
-    metadata = metadata.arg("createdOn", QString::number(QDateTime::currentMSecsSinceEpoch()), "\n\"%1\"\t\"%2\"\n%3");
-    metadata = metadata.arg("lastModified", QString::number(QDateTime::currentMSecsSinceEpoch()), "");
+    metadata = metadata.arg("CreatedOn", QString::number(QDateTime::currentMSecsSinceEpoch()), "\n\"%1\"\t\"%2\"\n%3");
+    metadata = metadata.arg("LastModified", QString::number(QDateTime::currentMSecsSinceEpoch()), "");
 
     return metadata;
 }
