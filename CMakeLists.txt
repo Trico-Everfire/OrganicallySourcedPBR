@@ -36,6 +36,10 @@ target_link_libraries(OrganicallySourcedPBR PRIVATE
         sourcepp::vtfpp
 )
 
+if(DEFINED QT_BASEDIR)
+    string(REPLACE "\\" "/" QT_BASEDIR "${QT_BASEDIR}")
+endif ()
+
 option(OGP_INSTALL "Configure install and CPack rules for OrganicallySourcedPBR" OFF)
 if(OGP_INSTALL)
     if(WIN32)
@@ -53,7 +57,14 @@ if(OGP_INSTALL)
 
         install(FILES "${QT_BASEDIR}/plugins/platforms/qwindows${QT_LIB_SUFFIX}.dll"
                 DESTINATION "platforms")
-        
+
+        if(EXISTS "${QT_BASEDIR}/plugins/styles/qmodernwindowsstyle${QT_LIB_SUFFIX}.dll")
+            install(FILES "${QT_BASEDIR}/plugins/styles/qmodernwindowsstyle${QT_LIB_SUFFIX}.dll"
+                    DESTINATION "styles")
+        else()
+            install(FILES "${QT_BASEDIR}/plugins/styles/qwindowsvistastyle${QT_LIB_SUFFIX}.dll"
+                    DESTINATION "styles")
+        endif()
     elseif(UNIX)
         install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE"
                 DESTINATION "share/licenses/${PROJECT_NAME}")
@@ -132,6 +143,11 @@ if(WIN32)
     configure_file("${QT_BASEDIR}/bin/Qt6Widgets${QT_LIB_SUFFIX}.dll"             "${CMAKE_BINARY_DIR}/Qt6Widgets${QT_LIB_SUFFIX}.dll"         COPYONLY)
     configure_file("${QT_BASEDIR}/bin/Qt6Network${QT_LIB_SUFFIX}.dll"             "${CMAKE_BINARY_DIR}/Qt6Network${QT_LIB_SUFFIX}.dll"         COPYONLY)
     configure_file("${QT_BASEDIR}/plugins/platforms/qwindows${QT_LIB_SUFFIX}.dll" "${CMAKE_BINARY_DIR}/platforms/qwindows${QT_LIB_SUFFIX}.dll" COPYONLY)
+    if(EXISTS "${QT_BASEDIR}/plugins/styles/qmodernwindowsstyle${QT_LIB_SUFFIX}.dll")
+        configure_file("${QT_BASEDIR}/plugins/styles/qmodernwindowsstyle${QT_LIB_SUFFIX}.dll" "${CMAKE_BINARY_DIR}/styles/qmodernwindowsstyle${QT_LIB_SUFFIX}.dll" COPYONLY)
+    else()
+        configure_file("${QT_BASEDIR}/plugins/styles/qwindowsvistastyle${QT_LIB_SUFFIX}.dll" "${CMAKE_BINARY_DIR}/styles/qwindowsvistastyle${QT_LIB_SUFFIX}.dll" COPYONLY)
+    endif()
     configure_file("${QT_BASEDIR}/plugins/tls/qcertonlybackend${QT_LIB_SUFFIX}.dll" "${CMAKE_BINARY_DIR}/tls/qcertonlybackend${QT_LIB_SUFFIX}.dll" COPYONLY)
     configure_file("${QT_BASEDIR}/plugins/tls/qschannelbackend${QT_LIB_SUFFIX}.dll" "${CMAKE_BINARY_DIR}/tls/qschannelbackend${QT_LIB_SUFFIX}.dll" COPYONLY)
 elseif(UNIX AND DEFINED QT_BASEDIR)
