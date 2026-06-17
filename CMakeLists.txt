@@ -53,14 +53,7 @@ if(OGP_INSTALL)
 
         install(FILES "${QT_BASEDIR}/plugins/platforms/qwindows${QT_LIB_SUFFIX}.dll"
                 DESTINATION "platforms")
-
-        if(EXISTS "${QT_BASEDIR}/plugins/styles/qmodernwindowsstyle${QT_LIB_SUFFIX}.dll")
-            install(FILES "${QT_BASEDIR}/plugins/styles/qmodernwindowsstyle${QT_LIB_SUFFIX}.dll"
-                    DESTINATION "styles")
-        else()
-            install(FILES "${QT_BASEDIR}/plugins/styles/qwindowsvistastyle${QT_LIB_SUFFIX}.dll"
-                    DESTINATION "styles")
-        endif()
+        
     elseif(UNIX)
         install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE"
                 DESTINATION "share/licenses/${PROJECT_NAME}")
