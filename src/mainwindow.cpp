@@ -542,7 +542,7 @@ QString CPBRWindow::getSaveDirectory()
 
     if(!this->getPlacementPrefix().isEmpty()) {
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
+#if QT_VERSION >= QT_VERSION_CHECK(6, 10, 0)
         auto baseDirPermissions = basedir.permissions();
         if(!QDir(directory).mkpath(this->getPlacementPrefix().remove(this->getPlacementPrefix().length(),1), baseDirPermissions))
         {
