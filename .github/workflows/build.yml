@@ -42,6 +42,7 @@ jobs:
       - name: Install NSIS
         uses: negrutiu/nsis-install@v3
         with:
+          version: 'v3.11.7461.309'
           arch: x64
 
       - name: Configure CMake
@@ -54,7 +55,7 @@ jobs:
       - name: Upload Standalone
         uses: actions/upload-artifact@v4
         with:
-          name: 'MareTF-Windows-Standalone-msvc-${{matrix.build_type}}'
+          name: 'OrganicallySourcedPBR-Windows-Standalone-msvc-${{matrix.build_type}}'
           path: |
             ${{env.BUILD_DIR}}/LICENSE
             ${{env.BUILD_DIR}}/OrganicallySourcedPBR.exe
