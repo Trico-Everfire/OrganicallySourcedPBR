@@ -17,6 +17,7 @@
 #include <QSettings>
 #include <QApplication>
 #include <cmath>
+#include <QDialogButtonBox>
 
 constexpr char supported_images[] = "*.png *.jpg *.jpeg *.exr *.bmp *.psd *.gif *.pic *.hdr *.tga *.qoi *.webp";
 
@@ -73,15 +74,27 @@ QMap<vtfpp::ImageFormat, QString> IMAGE_FORMATS = {
         { vtfpp::ImageFormat::STRATA_BC6H, "BC6H" },
         { vtfpp::ImageFormat::STRATA_BC7, "BC7" } };
 
+inline bool isDarkMode() {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
+    const auto scheme = QGuiApplication::styleHints()->colorScheme();
+  return scheme == Qt::ColorScheme::Dark;
+#else
+    const QPalette defaultPalette;
+    const auto text = defaultPalette.color(QPalette::WindowText);
+    const auto window = defaultPalette.color(QPalette::Window);
+    return text.lightness() > window.lightness();
+#endif // QT_VERSION
+}
+
 const QPixmap getUploadImage()
 {
     static const QPixmap uploadImageDark = {":/upload_image_dark.png"};
     static const QPixmap uploadImageLight = {":/upload_image_light.png"};
     static const QPixmap uploadImageUnknown = {":/upload_image_unknown.png"};
 
-    if(qGuiApp->styleHints()->colorScheme() == Qt::ColorScheme::Dark)
+    if(isDarkMode())
         return uploadImageDark;
-    if(qGuiApp->styleHints()->colorScheme() == Qt::ColorScheme::Light)
+    if(!isDarkMode())
         return uploadImageLight;
 
     return uploadImageUnknown;
@@ -529,12 +542,22 @@ QString CPBRWindow::getSaveDirectory()
 
     if(!this->getPlacementPrefix().isEmpty()) {
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
         auto baseDirPermissions = basedir.permissions();
-        if(!QDir(directory).mkpath(this->getPlacementPrefix().removeLast(), baseDirPermissions))
+        if(!QDir(directory).mkpath(this->getPlacementPrefix().remove(this->getPlacementPrefix().length(),1), baseDirPermissions))
         {
             QMessageBox::critical(this, QObject::tr("Unable to create subdirectory!"), QObject::tr("Unable to create subdirectory %1").arg(directory + "/" + this->getPlacementPrefix().removeLast()));
             return"";
         }
+#else
+        auto baseDirPermissions = basedir.permissions();
+        if(!QDir(directory).mkpath(this->getPlacementPrefix().remove(this->getPlacementPrefix().length()-1,1)))
+        {
+            QMessageBox::critical(this, QObject::tr("Unable to create subdirectory!"), QObject::tr("Unable to create subdirectory %1").arg(directory + "/" + this->getPlacementPrefix().remove(this->getPlacementPrefix().length()-1,1)));
+            return"";
+        }
+        QFile::setPermissions(directory + "/" + this->getPlacementPrefix(), baseDirPermissions);
+#endif
 
         directory += "/" + this->getPlacementPrefix();
     }
