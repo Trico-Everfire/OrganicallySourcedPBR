@@ -55,7 +55,7 @@ jobs:
       - name: Upload Standalone
         uses: actions/upload-artifact@v4
         with:
-          name: 'MareTF-Windows-Standalone-msvc-${{matrix.build_type}}'
+          name: 'OrganicallySourcedPBR-Windows-Standalone-msvc-${{matrix.build_type}}'
           path: |
             ${{env.BUILD_DIR}}/LICENSE
             ${{env.BUILD_DIR}}/OrganicallySourcedPBR.exe
