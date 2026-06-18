@@ -67,6 +67,13 @@ jobs:
       - name: Create Installer
         working-directory: ${{env.BUILD_DIR}}
         run: cpack
+        
+      - name: Archive Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nsis-log
+          path: build/_CPack_Packages/win64/NSIS/NSISOutput.log
 
       - name: Upload Installer
         uses: actions/upload-artifact@v4
