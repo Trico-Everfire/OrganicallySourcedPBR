@@ -1,3 +1,4 @@
+<a href="https://ko-fi.com/trico_everfire" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/donate-006dae?label=ko-fi&logo=ko-fi" alt="Ko-Fi" /></a>
 # OrganicallySourcedPBR
 ## A QT C++ rewrite of [PBR-2-Source by koerismo](https://github.com/koerismo/PBR-2-Source)
 
